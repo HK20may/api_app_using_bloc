@@ -33,6 +33,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final counterBloc = CounterBloc();
 
   @override
+  void dispose() {
+    counterBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,10 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
               stream: counterBloc.counterStream,
               initialData: 0,
               builder: (context, snapshot) {
-                return Text(
-                  '${snapshot.data}',
-                  style: Theme.of(context).textTheme.headline4,
-                );
+                if (snapshot.hasData) {
+                  return Text(
+                    '${snapshot.data}',
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else {
+                  return Container();
+                }
               },
             ),
           ],

@@ -26,4 +26,9 @@ class CounterBloc {
       _counterSink.add(counter);
     });
   }
+
+  void dispose() {
+    _stateStreamController.close();
+    _evenStreamController.close();
+  }
 }
